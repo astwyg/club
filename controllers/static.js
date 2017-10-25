@@ -12,9 +12,9 @@ exports.faq = function (req, res, next) {
   res.render('static/faq');
 };
 
-exports.getstart = function (req, res) {
-  res.render('static/getstart', {
-    pageTitle: 'Node.js 新手入门'
+exports.blacklist = function (req, res) {
+  res.render('static/blacklist', {
+    pageTitle: '黑名单'
   });
 };
 
