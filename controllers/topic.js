@@ -18,7 +18,9 @@ var store        = require('../common/store');
 var config       = require('../config');
 var _            = require('lodash');
 var cache        = require('../common/cache');
-var logger = require('../common/logger')
+var logger = require('../common/logger');
+
+var beautify = require('js-beautify').html_beautify;
 
 /**
  * Topic page
@@ -185,6 +187,28 @@ exports.showEdit = function (req, res, next) {
     }
 
     if (String(topic.author_id) === String(req.session.user._id) || req.session.user.is_admin) {
+      //fix for html
+      if (topic.content.startsWith("<!--usehtml-->")){
+        topic.content = beautify(topic.content, {
+            "brace_style":"collapse",
+            "break_chained_methods":false,
+            "comma_first":false,
+            "e4x":false,
+            "end_with_newline":false,
+            "indent_char":" ",
+            "indent_inner_html":false,
+            "indent_scripts":"normal",
+            "indent_size":"2",
+            "jslint_happy":false,
+            "keep_array_indentation":false,
+            "max_preserve_newlines":"-1",
+            "preserve_newlines":false,
+            "space_before_conditional":true,
+            "unescape_strings":false,
+            "wrap_line_length":"0"
+        });
+      }
+
       res.render('topic/edit', {
         action: 'edit',
         topic_id: topic._id,
