@@ -129,7 +129,11 @@
     <div class='inner topic'>
 
       <div class='topic_content'>
-        <%- markdown(topic.linkedContent) %>
+        <% if(topic.linkedContent.startsWith("<!--usehtml-->")) { %>
+          <%- topic.linkedContent %>
+        <% } else { %>
+          <%- markdown(topic.linkedContent) %>
+        <% } %>
       </div>
     </div>
   </div>
