@@ -1,0 +1,23 @@
+<%- partial('../sidebar') %>
+
+<div id='content'>
+  <div class='panel'>
+    <div class='header'>
+      <ul class='breadcrumb'>
+        <li><a href='/'>主页</a><span class='divider'>/</span></li>
+        <li class='active'>微信图文消息生成工具</li>
+      </ul>
+    </div>
+    <div class='inner topic'>
+      <div class="topic_content">
+          <h3>一声刚好 - 近期精华主题</h3>
+          <% topics.forEach(topic => { %>
+          <div class="cell">
+              <p class="pull-left" style="font-size: 25px;"><%=topic.title %></p><br />
+              <p class="pull-right" style="color: gray;">热度:<%= topic.visit_count %> / 发表于:<%= topic.create_at_ago() %></p>
+          </div>
+          <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
