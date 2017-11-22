@@ -1,6 +1,7 @@
 var multiline = require('multiline');
 var Topic        = require('../proxy').Topic;
 var eventproxy   = require('eventproxy');
+const moment = require("moment");
 
 // static page
 // About
@@ -41,6 +42,7 @@ exports.api = function (req, res, next) {
 
 exports.wxindex = function(req, res, next){
   let number = Number(req.query.number || '30');
+  let days = req.query.days;
 
   let proxy = new eventproxy();
   proxy.fail(next);
@@ -48,6 +50,9 @@ exports.wxindex = function(req, res, next){
   let query = {
       good: true,
   };
+  if(days){
+      query.create_at= {$gte: moment().subtract(Number(days), 'days').toDate()}
+  }
   let options = { limit: number, sort: '-top -create_at'};
 
   Topic.getTopicsByQuery(query, options, proxy.done('topics', function (topics) {
